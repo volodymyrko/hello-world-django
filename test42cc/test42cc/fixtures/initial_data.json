@@ -1,0 +1,20 @@
+[
+    {
+        "pk": 1, 
+        "model": "auth.user", 
+        "fields": {
+            "username": "admin", 
+            "first_name": "", 
+            "last_name": "", 
+            "is_active": true, 
+            "is_superuser": true, 
+            "is_staff": true, 
+            "last_login": "2012-04-04T12:46:05.254Z", 
+            "groups": [], 
+            "user_permissions": [], 
+            "password": "pbkdf2_sha256$10000$aTun3phxwlgQ$J2UTGxSV6iwaaC9gPGV9TRqKKdsJoqOmQld4+5sbibw=", 
+            "email": "vova@test.local", 
+            "date_joined": "2012-04-04T12:45:50.283Z"
+        }
+    }
+]
