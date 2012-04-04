@@ -3,12 +3,15 @@ from django.db import models
 # Create your models here.
 
 class Contact(models.Model):
-    """ present my Contact
+    """ present my Contact in db
     """
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50)
     birthday = models.CharField(max_length=30)
     bio = models.TextField(blank=True)
+    email = models.EmailField()
+    jabber = models.EmailField()
+    skype = models.CharField(max_length=50, blank=True)
     contacts = models.TextField(blank=True)
 
     def __unicode__(self):
@@ -16,4 +19,4 @@ class Contact(models.Model):
 
     class Meta:
         db_table = 'contact'
-        ordering = ["id"]
+        ordering = ['id']

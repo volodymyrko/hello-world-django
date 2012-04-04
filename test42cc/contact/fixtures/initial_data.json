@@ -1,101 +1,16 @@
 [
     {
-        "pk": 8, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "contact", 
-            "name": "contact", 
-            "app_label": "contact"
-        }
-    }, 
-    {
-        "pk": 4, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "contenttype", 
-            "name": "content type", 
-            "app_label": "contenttypes"
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "group", 
-            "name": "group", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": 7, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "logentry", 
-            "name": "log entry", 
-            "app_label": "admin"
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "permission", 
-            "name": "permission", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": 5, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "session", 
-            "name": "session", 
-            "app_label": "sessions"
-        }
-    }, 
-    {
-        "pk": 6, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "site", 
-            "name": "site", 
-            "app_label": "sites"
-        }
-    }, 
-    {
-        "pk": 3, 
-        "model": "contenttypes.contenttype", 
-        "fields": {
-            "model": "user", 
-            "name": "user", 
-            "app_label": "auth"
-        }
-    }, 
-    {
-        "pk": "81e0461b1123491da1c05acb0df123e0", 
-        "model": "sessions.session", 
-        "fields": {
-            "expire_date": "2012-04-18T10:57:44.298Z", 
-            "session_data": "NGYyYmZmY2E5MzU5NzYzZTRlZmUxY2UxOWI4MmY4N2Y1MjQyN2ZmYTqAAn1xAShVEl9hdXRoX3Vz\nZXJfYmFja2VuZHECVSlkamFuZ28uY29udHJpYi5hdXRoLmJhY2tlbmRzLk1vZGVsQmFja2VuZHED\nVQ1fYXV0aF91c2VyX2lkcQRLAXUu\n"
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "sites.site", 
-        "fields": {
-            "domain": "example.com", 
-            "name": "example.com"
-        }
-    }, 
-    {
         "pk": 1, 
         "model": "contact.contact", 
         "fields": {
             "bio": "I am ...", 
-            "birthday": "29.07.1984", 
             "surname": "Kovtun", 
             "name": "Volodya", 
-            "contacts": "My contacts are"
+            "contacts": "I am in ..", 
+            "birthday": "29.07.1984", 
+            "skype": "volodya", 
+            "jabber": "volodymyrko@khavr.com", 
+            "email": "my_mail@ukraine.ua"
         }
     }, 
     {
@@ -324,38 +239,12 @@
             "is_active": true, 
             "is_superuser": true, 
             "is_staff": true, 
-            "last_login": "2012-04-04T10:57:44.231Z", 
+            "last_login": "2012-04-04T12:46:05.254Z", 
             "groups": [], 
             "user_permissions": [], 
-            "password": "pbkdf2_sha256$10000$VBeOtjLaEJvZ$67Jfp4EhFW2dPFNWgDgkJsmn9XClBkIpRtWnFYHR1Ss=", 
-            "email": "vova07@gmail.com", 
-            "date_joined": "2012-04-04T10:14:22.543Z"
-        }
-    }, 
-    {
-        "pk": 2, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 2, 
-            "action_time": "2012-04-04T11:04:01.608Z", 
-            "object_repr": "Volodya Kovtun", 
-            "object_id": "1", 
-            "change_message": "Changed bio and contacts.", 
-            "user": 1, 
-            "content_type": 8
-        }
-    }, 
-    {
-        "pk": 1, 
-        "model": "admin.logentry", 
-        "fields": {
-            "action_flag": 1, 
-            "action_time": "2012-04-04T11:00:48.871Z", 
-            "object_repr": "Volodya Kovtun", 
-            "object_id": "1", 
-            "change_message": "", 
-            "user": 1, 
-            "content_type": 8
+            "password": "pbkdf2_sha256$10000$aTun3phxwlgQ$J2UTGxSV6iwaaC9gPGV9TRqKKdsJoqOmQld4+5sbibw=", 
+            "email": "vova@test.local", 
+            "date_joined": "2012-04-04T12:45:50.283Z"
         }
     }
 ]

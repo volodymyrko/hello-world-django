@@ -1,0 +1,19 @@
+.main{
+    width: 60%;
+}
+
+.msg42{
+    font-size: 20px;
+    font-weight: bold;
+}
+.left{
+    float: left;
+    width: 50%;
+    margin: 20px 0 0 0;
+}
+.clear{
+    clear: both;
+}
+.entry{
+    margin: 10px 0 0 0;
+}

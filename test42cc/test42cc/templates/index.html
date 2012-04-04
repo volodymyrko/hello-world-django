@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}42cc Contact Index Page{% endblock %}
+{% block content %}
+<div class="msg42">
+    42 Coffee Cups Test Assignment
+</div>
+<div class="left">
+    <div class="entry">{{ contact.name }}</div>
+    <div class="entry">{{ contact.surname }}</div>
+    <div class="entry">{{ contact.birthday }}</div>
+    <div class="entry">
+        Bio:
+        <div>{{ contact.bio }}</div>
+    </div>
+</div>
+<div class="left">
+    <div class="entry">Contacts</div>
+    <div class="entry">Email: {{ contact.email }} </div>
+    <div class="entry">Jabber: {{ contact.jabber }}</div>
+    <div class="entry">Skype: {{ contact.skype }}</div>
+    <div class="entry">Other Contacts:
+        <br>{{ contact.contacts }}
+    </div>
+</div>
+
+
+</div class="clear"></div>
+
+{% endblock %}
