@@ -1,0 +1,4 @@
+*.pyc
+*.db
+*.tar.gz
+*.orig
