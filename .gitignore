@@ -2,3 +2,6 @@
 *.db
 *.tar.gz
 *.orig
+.coverage
+htmlcov/
+

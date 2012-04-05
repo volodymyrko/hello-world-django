@@ -4,7 +4,8 @@ from django.http import Http404
 from contact.models import Contact
 
 def index(request):
-    #import pdb; pdb.set_trace()
+    """ index page: show contacts
+    """
     query = Contact.objects.all()[:1]
     if query:
         contact = query.get()

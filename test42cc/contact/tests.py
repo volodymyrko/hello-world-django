@@ -19,20 +19,20 @@ class SimpleTest(TestCase):
 
 class ContactTest(unittest.TestCase):
     def setUp(self):
-        Contact.objects.create(name='test_name', surname='test_surname',
-            birthday='01.01.1970', email='test@testing.local', jabber='jabber@test',
-            skype='test_skype', contacts='test_contacts')
+        self.client = Client()
 
     def test_contact_creation(self):
         """ test for Contact objects creation
         """
-        self.assertTrue(Contact.objects.count() > 0)
+        Contact.objects.create(name='test_name', surname='test_surname',
+            birthday='01.01.1970', email='test@testing.local', jabber='jabber@test',
+            skype='test_skype', contacts='test_contacts')
         test_contact = Contact.objects.get(name='test_name')
         self.assertEqual(test_contact.surname, 'test_surname')
+        self.assertTrue(Contact.objects.count() > 0)
     
     def test_index_page(self):
         """ test http code for index page 
         """
-        client = Client()
-        response = client.get('/')
+        response = self.client.get('/')
         self.assertEqual(response.status_code, 200)

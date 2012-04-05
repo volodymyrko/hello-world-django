@@ -1,4 +1,4 @@
-""" url schema for project
+""" url schema for app contact
 """
 
 from django.conf.urls.defaults import patterns, include, url
