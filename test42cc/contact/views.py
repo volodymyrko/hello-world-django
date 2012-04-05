@@ -3,6 +3,7 @@ from django.shortcuts import render_to_response
 from django.http import Http404
 from contact.models import Contact
 
+
 def index(request):
     """ index page: show contacts
     """

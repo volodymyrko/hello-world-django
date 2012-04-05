@@ -2,6 +2,7 @@ from django.db import models
 
 # Create your models here.
 
+
 class Contact(models.Model):
     """ present my Contact in db
     """
@@ -15,7 +16,7 @@ class Contact(models.Model):
     contacts = models.TextField(blank=True)
 
     def __unicode__(self):
-        return self.name+' '+self.surname
+        return self.name + ' ' + self.surname
 
     class Meta:
         db_table = 'contact'
