@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}List of last http requests{% endblock %}
+
+{% block content %}
+<div class="msg42">
+    <p>Last http request log</p>
+</div>
+<div>
+    <p>{{ requests.start_index }}-{{ requests.end_index }} records</p>
+</div>
+    <table class="tb" >
+        <tr>
+            <th>Path</th>
+            <th>Time</th>
+            <th>Method</th>
+            <th>remote_addr</th>
+        </tr>
+        {% for request in requests.object_list %}
+            <tr>
+                <td>{{ request.path }}</td>
+                <td>{{ request.time }}</td>
+                <td>{{ request.method }}</td>
+                <td>{{ request.remote_address }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+<div class="pg">
+    <span >
+        {% if requests.has_previous %}
+            <a href="?page={{ requests.previous_page_number }}">&lt;&lt; previous</a>
+        {% endif %}
+
+        <span class="current_link">
+            Page {{ requests.number }} of {{ requests.paginator.num_pages }}.
+        </span>
+
+        {% if requests.has_next %}
+            <a href="?page={{ requests.next_page_number }}">next &gt;&gt;</a>
+        {% endif %}
+    </span>
+</div>
+<div>
+    <p>
+        <hr width="100%">
+        <a href="{% url index %}">Main page </a>
+    </p>
+</div>
+{% endblock %}

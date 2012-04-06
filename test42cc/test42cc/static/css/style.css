@@ -17,3 +17,34 @@
 .entry{
     margin: 10px 0 0 0;
 }
+table.tb {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #666666;
+    border-collapse: collapse;
+}
+table.tb th {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #dedede;
+}
+table.tb td {
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #666666;
+    background-color: #ffffff;
+}
+.current_link {
+    margin: 0 10px 0 10px;
+    font-family: verdana,arial,sans-serif;
+    font-size:14px;
+}
+
+a:visited {
+    color: blue;
+}
