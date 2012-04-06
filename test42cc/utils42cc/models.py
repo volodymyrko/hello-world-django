@@ -12,7 +12,8 @@ class HttpRequestEntry(models.Model):
     remote_addr = models.CharField(max_length=20)
 
     def __unicode__(self):
-        return self.path[:20] + ' : ' + self.remote_addr
+        time = self.time.strftime("%Y-%m-%d %H:%M:%S")
+        return '%s - %s (%s)' % (self.path[:20], self.remote_addr, time)
 
     class Meta:
         db_table = 'http_request'
