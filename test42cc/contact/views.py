@@ -1,6 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.http import Http404
+from django.template import RequestContext
 from contact.models import Contact
 
 
@@ -12,4 +13,5 @@ def index(request):
         contact = query.get()
     else:
         raise Http404
-    return render_to_response('index.html', {'contact': contact})
+    return render_to_response('index.html', {'contact': contact},
+        context_instance=RequestContext(request))

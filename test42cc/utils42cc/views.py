@@ -1,6 +1,7 @@
 # Create your views here.
 from django.shortcuts import render_to_response
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.template import RequestContext
 from utils42cc.models import HttpRequestEntry
 
 RECORDS_PER_PAGE = 10
@@ -18,4 +19,5 @@ def requests(request):
         requests = paginator.page(paginator.num_pages)
     except PageNotAnInteger:
         requests = paginator.page(1)
-    return render_to_response('requests.html', {'requests': requests})
+    return render_to_response('requests.html', {'requests': requests},
+        context_instance=RequestContext(request))
