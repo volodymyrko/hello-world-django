@@ -1,10 +1,11 @@
 .main{
-    width: 60%;
+    width: 90%;
 }
 
 .msg42{
     font-size: 20px;
     font-weight: bold;
+    float: left;
 }
 .left{
     float: left;
@@ -47,4 +48,10 @@ table.tb td {
 
 a:visited {
     color: blue;
+}
+.errorlist{
+    color: red;
+}
+.login{
+    float: right;
 }

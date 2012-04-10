@@ -4,14 +4,24 @@
 <div class="msg42">
     42 Coffee Cups Test Assignment
 </div>
+<div class="login">
+    {% if user.is_anonymous %}
+        <a href="/admin/">login</a>
+    {% else %}
+        <a href="{% url edit %}">edit</a>
+    {% endif %}
+</div>
+<div class="clear"></div>
+
 <div class="left">
     <div class="entry">{{ contact.name }}</div>
     <div class="entry">{{ contact.surname }}</div>
     <div class="entry">{{ contact.birthday }}</div>
-    <div class="entry">
-        Bio:
-        <div>{{ contact.bio }}</div>
-    </div>
+    {% if contact.photo %}
+        <div class="entry">Photo</div>
+        <img src="/static/{{ contact.photo.url }}">
+    {% endif %}
+    
 </div>
 <div class="left">
     <div class="entry">Contacts</div>
@@ -20,6 +30,10 @@
     <div class="entry">Skype: {{ contact.skype }}</div>
     <div class="entry">Other Contacts:
         <br>{{ contact.contacts }}
+    </div>
+    <div class="entry">
+        Bio:
+        <div>{{ contact.bio }}</div>
     </div>
 </div>
 <div class="clear"></div>
