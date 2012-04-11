@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="{{ django_settings.STATIC_URL}}css/style.css" />
     {% block extra_head %}
     {% endblock %}
 </head>
