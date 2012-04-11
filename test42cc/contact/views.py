@@ -7,7 +7,8 @@ from django.contrib.auth.decorators import login_required
 from contact.models import Contact
 from contact.forms import ContactForm
 
-NUMBER=5
+FORM_SPLIT_BY = 5
+
 
 def index(request):
     """ index page: show contacts
@@ -20,18 +21,17 @@ def index(request):
     return render_to_response('index.html', {'contact': contact},
         context_instance=RequestContext(request))
 
+
 @login_required(login_url='/admin/')
 def edit(request):
-    contact  = Contact.objects.all()[:1].get()
-    
+    contact = Contact.objects.all()[:1].get()
     if request.method == "POST":
-        
         form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
             form.save()
-            return redirect (reverse('index'))
+            return redirect(reverse('index'))
     else:
         form = ContactForm(instance=contact)
         #import pdb; pdb.set_trace()
-    return render_to_response('edit.html', {'form': form, 'number': NUMBER},
-        context_instance=RequestContext(request))
+    return render_to_response('edit.html', {'form': form,
+        'number': FORM_SPLIT_BY}, context_instance=RequestContext(request))
