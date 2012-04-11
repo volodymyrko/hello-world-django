@@ -55,3 +55,6 @@ a:visited {
 .login{
     float: right;
 }
+.field{
+    margin: 5px 0 5px 0;
+}
