@@ -5,27 +5,24 @@
     42 Coffee Cups Test Assignment
 </div>
 <div class="clear"></div>
-<form action="" method="POST" enctype="multipart/form-data">
-{% csrf_token %}
 
-<div class="left">
-{% for field in form %}
-    {% if forloop.counter == number %}
-        </div>
-        <div class="left">
-    {% endif %}
-    <div>
-        {{ field.errors }}
-        {{ field.label_tag }}: {{ field }}
-        {% if field.label == "Photo" %}
-            {% if field.value %} 
-                <img src="{{ django_settings.STATIC_URL }}{{ field.value  }}">
-            {% endif %}
+<form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="left">
+    {% for field in form %}
+        {% if forloop.counter == number %}
+            </div>
+            <div class="left">
         {% endif %}
+        <div class="field">
+            {{ field.errors }}
+            {{ field.label_tag }}: {{ field }}
+        </div>
+    {% endfor %}
     </div>
-{% endfor %}
-</div>
-<input type="submit" value="Change" name="submit">
+    <input type="submit" value="Change" name="submit">
+    &nbsp
+    <a href="{% url index %}">Cancel</a>
 </form>
 <div class="clear"></div>
 
