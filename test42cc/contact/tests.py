@@ -10,6 +10,9 @@ from django.utils import unittest
 from django.test.client import Client
 from contact.models import Contact
 
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWD = 'admin'
+
 
 class ContactTest(unittest.TestCase):
     def test_contact_creation(self):
@@ -39,3 +42,16 @@ class ViewsTest(unittest.TestCase):
         search = 'Volodya'
         response = self.client.get('/')
         self.assertIn(search, response.content)
+
+    def test_edit(self):
+        """ testing /edit/ page
+        """
+        test_email = 'me@test.ua'
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+        self.client.post('/edit/', {'name': 'Volodya',
+            'surname': 'Kovtun', 'email': test_email,
+            'jabber': 'j@jabber.ua', 'skype': 'skype',
+            'contacts': 'contacts', 'bio': 'bio',
+            'birthday': '28.07.2012'})
+        page = self.client.get('/')
+        self.assertIn(test_email, page.content)
