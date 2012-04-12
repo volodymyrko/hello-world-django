@@ -58,3 +58,10 @@ a:visited {
 .field{
     margin: 5px 0 5px 0;
 }
+.auth{
+    font-size: 20px;
+    font-weight: bold;
+}
+.center{
+    text-align: center;
+}
