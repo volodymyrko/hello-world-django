@@ -22,7 +22,7 @@ def index(request):
         context_instance=RequestContext(request))
 
 
-@login_required(login_url='/admin/')
+@login_required()
 def edit(request):
     contact = Contact.objects.all()[:1].get()
     if request.method == "POST":

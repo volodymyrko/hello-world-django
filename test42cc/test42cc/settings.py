@@ -171,3 +171,6 @@ FIXTURE_DIRS = (
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     'utils42cc.context_processors.django_settings',
 )
+
+LOGIN_URL = '/accounts/login/?next=/edit/'
+LOGIN_REDIRECT_URL = '/edit/'

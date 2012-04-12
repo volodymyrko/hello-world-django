@@ -6,7 +6,7 @@
 </div>
 <div class="login">
     {% if user.is_anonymous %}
-        <a href="/admin/">login</a>
+        <a href="{% url django.contrib.auth.views.login %}" title="login to edit contact info">login</a>
     {% else %}
         <a href="{% url edit %}">edit</a>
     {% endif %}

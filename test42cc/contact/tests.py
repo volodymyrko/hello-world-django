@@ -55,3 +55,5 @@ class ViewsTest(unittest.TestCase):
             'birthday': '28.07.2012'})
         page = self.client.get('/')
         self.assertIn(test_email, page.content)
+        contact = Contact.objects.all()[:1].get()
+        self.assertEqual(test_email, contact.email)
