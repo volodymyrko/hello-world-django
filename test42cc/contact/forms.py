@@ -3,6 +3,7 @@ from django.conf import settings
 from django.forms.widgets import Textarea, ClearableFileInput
 from django.utils.safestring import mark_safe
 from contact.models import Contact
+from contact.widgets import CalendarWidget
 
 
 class BrTextarea(Textarea):
@@ -36,4 +37,5 @@ class ContactForm(ModelForm):
             'bio': BrTextarea(),
             'contacts': BrTextarea(),
             'photo': PhotoWidget(),
+            'birthday': CalendarWidget(),
         }
