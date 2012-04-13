@@ -2,6 +2,28 @@
 {% block title %}Edit contact info{% endblock %}
 {% block extra_head %}
     {{ form.media }}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var options = {
+                dataType: 'json',
+                beforeSubmit:  showRequest,
+                success: response
+            };
+            $('#edit_form').ajaxForm(options)
+        })
+        function showRequest() {
+            $('#edit_form :input').attr('disabled', 'disabled')
+            return true;.
+        } ;
+        function response(responseText, statusText, xhr, $form){
+            //$('#edit_form :input').attr('disabled', false);
+            //$('#image').attr('src', responseText.url );
+            //alert(responseText.result)
+            alert("ok");
+        }
+
+        }
+    </script>
 {% endblock %}
 {% block content %}
 <div class="msg42">

@@ -4,6 +4,8 @@ from django.http import Http404
 from django.template import RequestContext
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
+from django.utils import simplejson
+from django.http import HttpResponse
 from contact.models import Contact
 from contact.forms import ContactForm
 
@@ -29,7 +31,10 @@ def edit(request):
         form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
             form.save()
-            return redirect(reverse('index'))
+            if request.is_ajax:
+                return HttpResponse(simplejson.dumps({'url': '/static/' }))
+            else:
+                return redirect(reverse('index'))
     else:
         form = ContactForm(instance=contact)
         #import pdb; pdb.set_trace()
