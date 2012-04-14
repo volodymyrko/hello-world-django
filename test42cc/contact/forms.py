@@ -18,10 +18,13 @@ class PhotoWidget(ClearableFileInput):
     """ widget that show image (<img> tag) with form
     """
     def render(self, name, value, attrs=None):
-        result = super(PhotoWidget, self).render(name, value, attrs=None)
+        result = super(PhotoWidget, self).render(name, value, attrs)
         if value and hasattr(value, 'url'):
-            result = mark_safe(u'%s<br /><img src="%s/%s">' % (result,
+            result = mark_safe(u'%s <br /><img src="%s%s" >' % (result,
                 settings.STATIC_URL, value.url))
+        else:
+            result = mark_safe(u'%s<br /><img src="%s%s" >' % (result,
+                settings.STATIC_URL, 'img/nophoto.gif'))
         return result
 
 
