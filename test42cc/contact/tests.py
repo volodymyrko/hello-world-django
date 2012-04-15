@@ -9,6 +9,7 @@ Replace this with more appropriate tests for your application.
 from django.utils import unittest
 from django.test.client import Client
 from contact.models import Contact
+from django.core.urlresolvers import reverse
 
 ADMIN_LOGIN = 'admin'
 ADMIN_PASSWD = 'admin'
@@ -69,3 +70,18 @@ class ViewsTest(unittest.TestCase):
         self.assertIn(self.test_email, page.content)
         contact = Contact.objects.all()[:1].get()
         self.assertEqual(self.test_email, contact.email)
+
+
+class ReverseFromTest(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.edit = reverse('edit')
+
+    def test_reverse(self):
+        """ check field sequence
+        """
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+        page = self.client.get(self.edit).content
+        t = '<label for="id_%s">'
+        self.assertTrue(page.find(t % 'bio') < page.find(t % 'email') <
+            page.find(t % 'surname') < page.find(t % 'name'))
