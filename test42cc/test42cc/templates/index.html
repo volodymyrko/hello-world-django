@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load tag %}
 {% block title %}42cc Contact Index Page{% endblock %}
 {% block content %}
 <div class="msg42">
@@ -8,7 +9,7 @@
     {% if user.is_anonymous %}
         <a href="{% url django.contrib.auth.views.login %}" title="login to edit contact info">login</a>
     {% else %}
-        <a href="{% url edit %}">edit</a>
+        <a href="{% url edit %}">edit</a> &nbsp <a href="{% edit_link request.user %}">(admin)</a>
     {% endif %}
 </div>
 <div class="clear"></div>

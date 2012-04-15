@@ -29,6 +29,12 @@ class ContactTest(unittest.TestCase):
 class ViewsTest(unittest.TestCase):
     def setUp(self):
         self.client = Client()
+        self.test_email = 'me@test.ua'
+        self.post_data = {'name': 'Volodya',
+            'surname': 'Kovtun', 'email': self.test_email,
+            'jabber': 'j@jabber.ua', 'skype': 'skype',
+            'contacts': 'contacts', 'bio': 'bio',
+            'birthday': '28.07.2012'}
 
     def test_index_page(self):
         """ test http code for index page
@@ -46,14 +52,20 @@ class ViewsTest(unittest.TestCase):
     def test_edit(self):
         """ testing /edit/ page
         """
-        test_email = 'me@test.ua'
         self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
-        self.client.post('/edit/', {'name': 'Volodya',
-            'surname': 'Kovtun', 'email': test_email,
-            'jabber': 'j@jabber.ua', 'skype': 'skype',
-            'contacts': 'contacts', 'bio': 'bio',
-            'birthday': '28.07.2012'})
+        self.client.post('/edit/', self.post_data)
         page = self.client.get('/')
-        self.assertIn(test_email, page.content)
+        self.assertIn(self.test_email, page.content)
         contact = Contact.objects.all()[:1].get()
-        self.assertEqual(test_email, contact.email)
+        self.assertEqual(self.test_email, contact.email)
+
+    def test_edit_ajax(self):
+        """ edit with jqeury
+        """
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+        self.client.post('/edit/', self.post_data,
+            HTTP_X_REQUESTED_WITH='XMLHttpRequest')
+        page = self.client.get('/')
+        self.assertIn(self.test_email, page.content)
+        contact = Contact.objects.all()[:1].get()
+        self.assertEqual(self.test_email, contact.email)

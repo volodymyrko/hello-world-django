@@ -14,6 +14,9 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from utils42cc.models import HttpRequestEntry
 
+ADMIN_LOGIN = 'admin'
+ADMIN_PASSWD = 'admin'
+
 
 class MiddlewareTest(unittest.TestCase):
     def setUp(self):
@@ -76,3 +79,15 @@ class ContextProcTest(unittest.TestCase):
     def test_context_exists(self):
         self.assertTrue(self.key in self.context)
         self.assertIn(self.proc, self.processors)
+
+
+class TagTest(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.index = reverse('index')
+        self.search = '/admin/auth/user/1/'
+
+    def test_tag(self):
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+        page = self.client.get(self.index)
+        self.assertIn(self.search, page.content)

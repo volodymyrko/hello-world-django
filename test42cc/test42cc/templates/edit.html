@@ -1,12 +1,48 @@
 {% extends "base.html" %}
 {% block title %}Edit contact info{% endblock %}
+{% block extra_head %}
+    {{ form.media }}
+    <script type="text/javascript" src="/static/js/jquery.form.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var options = {
+                dataType: 'json',
+                beforeSubmit:  showRequest,
+                success: response
+            };
+            $('#edit_form').ajaxForm(options);
+        })
+        function showRequest() {
+            $('#edit_form :input').attr('disabled', 'disabled')
+            $('.errorlist').remove()
+            $('.update').remove()
+            return true;
+        } ;
+        function response(responseText, statusText, xhr, $form){
+            $('#edit_form :input').attr('disabled', false);
+
+            if ( responseText.status == 'OK' ){
+                $("label[for='id_photo']").parent().html('<label for="id_photo">Photo</label>: '+responseText.image);
+                $('.msg42').next().append('<div class="update">Data saved</div>')
+                $('.update').fadeOut(2000)
+            }
+            else {
+                $('.msg42').next().append('<div class="update">Fix errors in form</div>')
+                $.each(responseText.errors, function(field, error){
+                    $('#id_'+field).parent().prepend('<div class="errorlist">'+error+'</div>')
+                })
+            }
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
 <div class="msg42">
     42 Coffee Cups Test Assignment
 </div>
 <div class="clear"></div>
 
-<form action="" method="POST" enctype="multipart/form-data">
+<form action="" method="POST" enctype="multipart/form-data" id="edit_form">
     {% csrf_token %}
     <div class="left">
     {% for field in form %}
@@ -14,7 +50,7 @@
             </div>
             <div class="left">
         {% endif %}
-        <div class="field">
+        <div class="field" >
             {{ field.errors }}
             {{ field.label_tag }}: {{ field }}
         </div>
