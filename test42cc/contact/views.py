@@ -9,7 +9,7 @@ from django.http import HttpResponse
 from contact.models import Contact
 from contact.forms import ContactForm
 
-FORM_SPLIT_BY = 5
+FORM_SPLIT_BY = 6
 
 
 def index(request):

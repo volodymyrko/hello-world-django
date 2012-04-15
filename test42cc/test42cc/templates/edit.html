@@ -44,11 +44,11 @@
 
 <form action="" method="POST" enctype="multipart/form-data" id="edit_form">
     {% csrf_token %}
-    <div class="left">
-    {% for field in form %}
+    <div class="right">
+    {% for field in form reversed %}
         {% if forloop.counter == number %}
             </div>
-            <div class="left">
+            <div class="right">
         {% endif %}
         <div class="field" >
             {{ field.errors }}
