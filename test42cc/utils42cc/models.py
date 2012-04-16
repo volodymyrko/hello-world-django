@@ -2,11 +2,13 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
+from django.db.utils import DatabaseError
 
 # Create your models here.
 
 IGNORE_MDOEL_LIST = getattr(settings, 'IGNORE_MDOEL_LIST', ()) + (
-    'session', 'httprequestentry', 'logentry', 'modelactionlog'
+    'session', 'httprequestentry', 'logentry', 'modelactionlog', 'contenttype',
+    'site', 'migrationhistory', 'permission',
 )
 
 ACTIONS = {
@@ -55,8 +57,11 @@ def log_action(sender, instance, **kwargs):
     if model_name not in IGNORE_MDOEL_LIST:
         action = ACTIONS[kwargs.get('created')]
         object_str = instance.__str__()[:200]
-        ModelActionLog.objects.create(model_name=model_name,
-            object_str=object_str, object_id=instance.id, action=action)
+        try:
+            ModelActionLog.objects.create(model_name=model_name,
+                object_str=object_str, object_id=instance.id, action=action)
+        except DatabaseError:
+            pass
 
 post_save.connect(log_action)
 post_delete.connect(log_action)

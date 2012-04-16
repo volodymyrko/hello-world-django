@@ -12,7 +12,7 @@ from django.template import RequestContext
 from django.http import HttpRequest
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from utils42cc.models import HttpRequestEntry
+from utils42cc.models import HttpRequestEntry, ModelActionLog
 
 ADMIN_LOGIN = 'admin'
 ADMIN_PASSWD = 'admin'
@@ -91,3 +91,32 @@ class TagTest(unittest.TestCase):
         self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
         page = self.client.get(self.index)
         self.assertIn(self.search, page.content)
+
+
+class ModelActionLogTest(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.edit = reverse('edit')
+        self.post_data = {'name': 'Volodya',
+            'surname': 'Kovtun', 'email': 'me@in.ua',
+            'jabber': 'j@jabber.ua', 'skype': 'skype',
+            'contacts': 'contacts', 'bio': 'bio',
+            'birthday': '28.07.2012'}
+
+    def test_store_log(self):
+        """ test for store action log with models
+        """
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+        ModelActionLog.objects.all().delete()
+        self.client.post(self.edit, self.post_data)
+        log = ModelActionLog.objects.all()[:1].get()
+        self.assertTrue(ModelActionLog.objects.count() > 0)
+        self.assertEqual(log.model_name, 'contact')
+
+    def test_exclude_log(self):
+        """ test for exclude operation with some models
+        """
+        ModelActionLog.objects.all().delete()
+        HttpRequestEntry.objects.create(path='test',
+            method='TEST', remote_addr='127.0.0.1')
+        self.assertTrue(ModelActionLog.objects.count() == 0)
