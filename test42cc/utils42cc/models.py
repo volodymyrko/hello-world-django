@@ -36,6 +36,7 @@ class HttpRequestEntry(models.Model):
 class ModelActionLog(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     model_name = models.CharField(max_length=50)
+    object_str = models.CharField(max_length=200, blank=True)
     object_id = models.IntegerField()
     action = models.CharField(max_length=10)
 
@@ -53,8 +54,9 @@ def log_action(sender, instance, **kwargs):
     model_name = ContentType.objects.get_for_model(instance).model
     if model_name not in IGNORE_MDOEL_LIST:
         action = ACTIONS[kwargs.get('created')]
+        object_str = instance.__str__()[:200]
         ModelActionLog.objects.create(model_name=model_name,
-            object_id=instance.id, action=action)
+            object_str=object_str, object_id=instance.id, action=action)
 
 post_save.connect(log_action)
 post_delete.connect(log_action)
