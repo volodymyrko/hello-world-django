@@ -13,6 +13,8 @@ from django.http import HttpRequest
 from django.conf import settings
 from django.core.urlresolvers import reverse
 from utils42cc.models import HttpRequestEntry
+from django.core.management import call_command
+import StringIO
 
 ADMIN_LOGIN = 'admin'
 ADMIN_PASSWD = 'admin'
@@ -91,3 +93,24 @@ class TagTest(unittest.TestCase):
         self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
         page = self.client.get(self.index)
         self.assertIn(self.search, page.content)
+
+
+class PrintModelsTest(unittest.TestCase):
+    def setUp(self):
+        self.stdout = StringIO.StringIO()
+        self.stderr = StringIO.StringIO()
+
+    def test_command(self):
+        """ test print_models command output, test error dupliction
+        """
+        call_command('print_models', **{'stdout': self.stdout,
+            'stderr': self.stderr})
+        self.stdout.seek(0)
+        self.stderr.seek(0)
+        errors = self.stderr.read()
+
+        self.assertTrue(self.stdout.len > 0)
+        self.assertTrue(self.stderr.len > 0)
+
+        for line in self.stdout.readlines():
+            self.assertIn(u'error: %s' % line, errors)
