@@ -25,6 +25,7 @@ class HttpRequestEntry(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     method = models.CharField(max_length=10)
     remote_addr = models.CharField(max_length=20)
+    priority = models.IntegerField(default=0)
 
     def __unicode__(self):
         time = self.time.strftime("%Y-%m-%d %H:%M:%S")
