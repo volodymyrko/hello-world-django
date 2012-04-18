@@ -6,7 +6,7 @@ from django.db.utils import DatabaseError
 
 # Create your models here.
 
-IGNORE_MDOEL_LIST = getattr(settings, 'IGNORE_MDOEL_LIST', ()) + (
+IGNORE_MODEL_LIST = getattr(settings, 'IGNORE_MODEL_LIST', ()) + (
     'session', 'httprequestentry', 'logentry', 'modelactionlog', 'contenttype',
     'site', 'migrationhistory', 'permission',
 )
@@ -54,7 +54,7 @@ class ModelActionLog(models.Model):
 
 def log_action(sender, instance, **kwargs):
     model_name = ContentType.objects.get_for_model(instance).model
-    if model_name not in IGNORE_MDOEL_LIST:
+    if model_name not in IGNORE_MODEL_LIST:
         action = ACTIONS[kwargs.get('created')]
         object_str = instance.__str__()[:200]
         try:
