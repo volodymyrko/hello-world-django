@@ -25,7 +25,7 @@ class MiddlewareTest(unittest.TestCase):
         """ prepare to testing
         """
         self.client = Client()
-        self.url = '/requests'
+        self.url = '/requests/'
 
     def test_middleware(self):
         """ middleware testing for saving urls
@@ -143,3 +143,41 @@ class ModelActionLogTest(unittest.TestCase):
         HttpRequestEntry.objects.create(path='test',
             method='TEST', remote_addr='127.0.0.1')
         self.assertTrue(ModelActionLog.objects.count() == 0)
+
+
+class RequestsPriorityTest(unittest.TestCase):
+    def setUp(self):
+        self.client = Client()
+        self.prio = reverse('prio')
+        self.page = reverse('requests')
+
+    def test_sequence_order(self):
+        HttpRequestEntry.objects.all().delete()
+        num = 15
+        t_url = '/request_%s/'
+        t = '<td>/request_%s/</td>'
+
+        self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
+
+        for i in range(num):
+            url = t_url % i
+            self.client.get(url)
+
+        """ test requests without change priority
+        """
+        page = self.client.get(self.page).content
+        self.assertTrue(page.find(t % '0') < page.find(t % '1') <
+            page.find(t % '4') < page.find(t % '7'))
+
+        """ test requests with priority change
+        """
+        self.client.get(self.prio, {'id': 5, 'action': 'plus'})
+        self.client.get(self.prio, {'id': 5, 'action': 'plus'})
+        self.client.get(self.prio, {'id': 2, 'action': 'plus'})
+
+        page = self.client.get(self.page).content
+        t = '<td>/request_%s/</td>'
+        self.assertFalse(page.find(t % '0') < page.find(t % '1') <
+            page.find(t % '4') < page.find(t % '7'))
+        self.assertTrue(page.find(t % '4') < page.find(t % '1') <
+            page.find(t % '0') < page.find(t % '7'))
