@@ -13,7 +13,7 @@
     <script type="text/javascript" src="/static/js/jquery.tablesorter.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#table").tablesorter( {sortList: [[4,0], [1,0]]} ); 
+            $("#table").tablesorter( {sortList: [[4,1], [1,0]]} ); 
             $("#dialog").dialog({autoOpen: false, buttons: [{ 
                     text: "Ok", click: function() { $(this).dialog("close"); }
                 }] 
@@ -28,7 +28,7 @@
                 success: function(data){
                     if( data.status == "OK"){
                         $('#td_'+id).text(data.prio);
-                        $("#table").tablesorter( {sortList: [[4,0], [1,0]]} ); 
+                        $("#table").tablesorter( {sortList: [[4,1], [1,0]]} ); 
                         //other solutions to resot not working
                         //$("#table").trigger("sorton", [[4,0]]);
                         //$("#table").trigger("update");
@@ -63,7 +63,7 @@
         </tr>
     </thead>
     <tbody>
-        {% for request in requests.object_list|dictsort:"priority" %}
+        {% for request in requests.object_list|dictsortreversed:"priority" %}
             <tr>
                 <td>{{ request.path }}</td>
                 <td>{{ request.time }}</td>
