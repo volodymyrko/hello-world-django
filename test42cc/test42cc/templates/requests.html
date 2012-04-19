@@ -2,7 +2,48 @@
 
 {% block title %}List of last http requests{% endblock %}
 
+{% block extra_head %}
+    <link href="/static/css/ui-lightness/jquery-ui-1.8.19.custom.css" type="text/css" media="all" rel="stylesheet" />
+    <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery-ui-1.8.19.custom.min.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.ui.dialog.js"></script>
+    <script type="text/javascript" src="/static/js/jquery.tablesorter.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#table").tablesorter( {sortList: [[4,0], [1,0]]} ); 
+            $("#dialog").dialog({autoOpen: false, buttons: [{ 
+                    text: "Ok", click: function() { $(this).dialog("close"); }
+                }] 
+            });
+        })
+        function DoAction(id, action){
+            $.ajax({
+                type: "GET",
+                dataType: 'json',
+                url: '/requests/prio/',
+                data: 'id=' + id + '&action=' + action,
+                success: function(data){
+                    if( data.status == "OK"){
+                        $('#td_'+id).text(data.prio);
+                        $("#table").tablesorter( {sortList: [[4,0], [1,0]]} ); 
+                        //other solutions to resot not working
+                        //$("#table").trigger("sorton", [[4,0]]);
+                        //$("#table").trigger("update");
+                    }
+                    else {
+                        $("#dialog").dialog('open');
+                    }
+                }
+            })
+        };
+    </script>
+{% endblock %}
+
 {% block content %}
+<div id="dialog" title="Dialog Title">Sorry, Something wrong is happened</div>
 <div class="msg42">
     <p>Last http request log</p>
 </div>
@@ -10,21 +51,32 @@
 <div>
     <p>{{ requests.start_index }}-{{ requests.end_index }} records</p>
 </div>
-    <table class="tb" >
+    <table id="table" class="tb" >
+        <thead>
         <tr>
             <th>Path</th>
             <th>Time</th>
             <th>Method</th>
             <th>remote_addr</th>
+            <th>Prio</th>
+            <th></th>
         </tr>
-        {% for request in requests.object_list %}
+    </thead>
+    <tbody>
+        {% for request in requests.object_list|dictsort:"priority" %}
             <tr>
                 <td>{{ request.path }}</td>
                 <td>{{ request.time }}</td>
                 <td>{{ request.method }}</td>
                 <td>{{ request.remote_addr }}</td>
+                <td id="td_{{ request.id }}">{{ request.priority }}</td>
+                <td>
+                    <img src="/static/img/up.png" OnClick="DoAction('{{ request.id }}','plus');">
+                    <img src="/static/img/down.png" OnClick="DoAction({{ request.id }},'minus');">
+                </td>
             </tr>
         {% endfor %}
+    </tbody>
     </table>
     
 <div class="pg">
