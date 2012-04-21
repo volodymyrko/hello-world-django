@@ -3,14 +3,14 @@
 {% block title %}List of last http requests{% endblock %}
 
 {% block extra_head %}
-    <link href="/static/css/ui-lightness/jquery-ui-1.8.19.custom.css" type="text/css" media="all" rel="stylesheet" />
-    <script type="text/javascript" src="/static/js/jquery-1.7.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery-ui-1.8.19.custom.min.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.ui.core.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.ui.position.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.ui.widget.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.ui.dialog.js"></script>
-    <script type="text/javascript" src="/static/js/jquery.tablesorter.js"></script>
+    <link href="{{ STATIC_URL }}css/ui-lightness/jquery-ui-1.8.19.custom.css" type="text/css" media="all" rel="stylesheet" />
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.8.19.custom.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.core.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.position.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.widget.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.ui.dialog.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tablesorter.js"></script>
     <script type="text/javascript">
         $(document).ready(function(){
             $("#table").tablesorter( {sortList: [[4,1], [1,0]]} ); 
@@ -29,9 +29,6 @@
                     if( data.status == "OK"){
                         $('#td_'+id).text(data.prio);
                         $("#table").tablesorter( {sortList: [[4,1], [1,0]]} ); 
-                        //other solutions to resot not working
-                        //$("#table").trigger("sorton", [[4,0]]);
-                        //$("#table").trigger("update");
                     }
                     else {
                         $("#dialog").dialog('open');
@@ -71,8 +68,8 @@
                 <td>{{ request.remote_addr }}</td>
                 <td id="td_{{ request.id }}">{{ request.priority }}</td>
                 <td>
-                    <img src="/static/img/up.png" OnClick="DoAction('{{ request.id }}','plus');">
-                    <img src="/static/img/down.png" OnClick="DoAction({{ request.id }},'minus');">
+                    <img src="{{ STATIC_URL }}img/up.png" OnClick="DoAction('{{ request.id }}','plus');">
+                    <img src="{{ STATIC_URL }}img/down.png" OnClick="DoAction({{ request.id }},'minus');">
                 </td>
             </tr>
         {% endfor %}

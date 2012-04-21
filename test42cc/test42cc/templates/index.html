@@ -20,7 +20,7 @@
     <div class="entry">{{ contact.birthday }}</div>
     {% if contact.photo %}
         <div class="entry">Photo</div>
-        <img src="{{ django_settings.STATIC_URL }}{{ contact.photo.url }}">
+        <img src="{{ STATIC_URL }}{{ contact.photo.url }}">
     {% endif %}
     
 </div>
