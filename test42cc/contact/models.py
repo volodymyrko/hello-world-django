@@ -21,7 +21,7 @@ class Contact(models.Model):
     photo = models.ImageField(upload_to='photo', blank=True)
 
     def __unicode__(self):
-        return "%s %s" %(self.name, self.surname)
+        return "%s %s" % (self.name, self.surname)
 
     class Meta:
         db_table = 'contact'
