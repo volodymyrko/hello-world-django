@@ -15,10 +15,9 @@ FORM_SPLIT_BY = 6
 def index(request):
     """ index page: show contacts
     """
-    query = Contact.objects.all()[:1]
-    if query:
-        contact = query.get()
-    else:
+    try:
+        contact = Contact.objects.all()[0]
+    except IndexError:
         raise Http404
     return render_to_response('index.html', {'contact': contact},
         context_instance=RequestContext(request))
@@ -26,7 +25,10 @@ def index(request):
 
 @login_required()
 def edit(request):
-    contact = Contact.objects.all()[:1].get()
+    try:
+        contact = Contact.objects.all()[0]
+    except IndexError:
+        raise Http404
     if request.method == "POST":
         form = ContactForm(request.POST, request.FILES, instance=contact)
         if form.is_valid():
