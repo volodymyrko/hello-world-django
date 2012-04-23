@@ -57,13 +57,15 @@ class ModelActionLog(models.Model):
 
 
 def log_action(sender, instance, **kwargs):
+
     model_name = ContentType.objects.get_for_model(instance).model
     if model_name not in IGNORE_MODEL_LIST:
         action = ACTIONS[kwargs.get('created')]
         object_str = instance.__str__()[:200]
         try:
             ModelActionLog.objects.create(model_name=model_name,
-                object_str=object_str, object_id=instance.id, action=action)
+                object_str=object_str, object_id=instance.id, action=action,
+                content_object=instance)
         except DatabaseError:
             pass
 
