@@ -2,6 +2,7 @@ from django.db import models
 from django.db.models.signals import post_save, post_delete
 from django.contrib.contenttypes.models import ContentType
 from django.conf import settings
+from django.contrib.contenttypes import generic
 from django.db.utils import DatabaseError
 
 # Create your models here.
@@ -42,6 +43,8 @@ class ModelActionLog(models.Model):
     object_str = models.CharField(max_length=200, blank=True)
     object_id = models.IntegerField()
     action = models.CharField(max_length=10)
+    content_type = models.ForeignKey(ContentType, blank=True, null=True)
+    content_object = generic.GenericForeignKey('content_type', 'object_id')
 
     def __unicode__(self):
         time = self.time.strftime("%Y-%m-%d %H:%M:%S")
@@ -54,13 +57,15 @@ class ModelActionLog(models.Model):
 
 
 def log_action(sender, instance, **kwargs):
+
     model_name = ContentType.objects.get_for_model(instance).model
     if model_name not in IGNORE_MODEL_LIST:
         action = ACTIONS[kwargs.get('created')]
         object_str = instance.__str__()[:200]
         try:
             ModelActionLog.objects.create(model_name=model_name,
-                object_str=object_str, object_id=instance.id, action=action)
+                object_str=object_str, object_id=instance.id, action=action,
+                content_object=instance)
         except DatabaseError:
             pass
 
