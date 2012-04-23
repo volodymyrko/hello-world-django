@@ -6,14 +6,6 @@ from contact.models import Contact
 from contact.widgets import CalendarWidget
 
 
-class BrTextarea(Textarea):
-    """ widget that show label_tag and field value in different rows
-    """
-    def render(self, name, value, attrs=None):
-        result = super(BrTextarea, self).render(name, value, attrs=None)
-        return mark_safe(u'<br />%s' % result)
-
-
 class PhotoWidget(ClearableFileInput):
     """ widget that show image (<img> tag) with form
     """
