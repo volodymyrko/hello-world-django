@@ -37,8 +37,8 @@ class ContactForm(ModelForm):
             'photo', 'email', 'jabber', 'skype',
             'contacts', 'bio')
         widgets = {
-            'bio': BrTextarea(),
-            'contacts': BrTextarea(),
+            'bio': Textarea(attrs={'class': 'block'}),
+            'contacts': Textarea(attrs={'class': 'block'}),
             'photo': PhotoWidget(),
             'birthday': CalendarWidget(),
         }
