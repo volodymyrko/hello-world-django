@@ -36,26 +36,27 @@ class ViewsTest(unittest.TestCase):
             'jabber': 'j@jabber.ua', 'skype': 'skype',
             'contacts': 'contacts', 'bio': 'bio',
             'birthday': '28.07.2012'}
+        self.index_page = reverse('index')
+        self.edit_page = reverse('edit')
 
     def test_index_page(self):
-        """ test http code for index page
+        """ test index page
         """
-        response = self.client.get('/')
+        response = self.client.get(self.index_page)
         self.assertEqual(response.status_code, 200)
-
-    def test_fixture_contact(self):
-        """test for data exists loaded with fixtures
-        """
-        search = 'Volodya'
-        response = self.client.get('/')
-        self.assertIn(search, response.content)
+        contact = Contact.objects.all()[0]
+        for field in contact._meta.fields:
+            if field.name == 'id':
+                continue
+            field_str = field.value_to_string(contact)
+            self.assertIn(field_str, response.content)
 
     def test_edit(self):
         """ testing /edit/ page
         """
         self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
-        self.client.post('/edit/', self.post_data)
-        page = self.client.get('/')
+        self.client.post(self.edit_page, self.post_data)
+        page = self.client.get(self.index_page)
         self.assertIn(self.test_email, page.content)
         contact = Contact.objects.all()[:1].get()
         self.assertEqual(self.test_email, contact.email)
@@ -64,9 +65,9 @@ class ViewsTest(unittest.TestCase):
         """ edit with jqeury
         """
         self.client.login(username=ADMIN_LOGIN, password=ADMIN_PASSWD)
-        self.client.post('/edit/', self.post_data,
+        self.client.post(self.edit_page, self.post_data,
             HTTP_X_REQUESTED_WITH='XMLHttpRequest')
-        page = self.client.get('/')
+        page = self.client.get(self.index_page)
         self.assertIn(self.test_email, page.content)
         contact = Contact.objects.all()[:1].get()
         self.assertEqual(self.test_email, contact.email)
